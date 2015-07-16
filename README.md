@@ -12,16 +12,16 @@ Installation
 
 1. Download and extract the files to a working directory.  On *nix systems, the easiest way to do this is:
 
-  wget https://github.com/KimPrince/zf2-starter/archive/master.tar.gz
-  tar xpvf master.tar.gz
-  mv zf2-starter-master my-directory
-  rm master.tar.gz
+    wget https://github.com/KimPrince/zf2-starter/archive/master.tar.gz
+    tar xpvf master.tar.gz
+    mv zf2-starter-master my-directory
+    rm master.tar.gz
 
 2. Run a composer update to get vendor dependencies
 
-  cd my-directory
-  composer self-update
-  composer install
+    cd my-directory
+    composer self-update
+    composer install
 
 3. Point a virtual host to my-directory/public, and browse the host to see the welcome page
 
