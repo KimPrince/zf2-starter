@@ -4,21 +4,26 @@ Starter Application
 Introduction
 ------------
 This is a starting point for applications with complex business logic. It is a PHP MVC skeleton with a
-Domain (Domain Model), Data Mapper and Service Layer. It uses Zend Framework 2 (ZF2)
-however may be ported to other frameworks quite easily. You are welcome to use it as the foundation for
-your next application.
+Domain (Domain Model), Data Mapper and Service Layer. It uses Zend Framework 2 however may be ported to
+other frameworks quite easily. You are welcome to use it as the foundation for your next application.
 
 Installation
 ------------
 
-To get started using the 'quick' method:
+1. Download and extract the files to a working directory.  On *nix systems, the easiest way to do this is:
 
-1. Download the zip from github
-2. Extract the zip to where your virtual hosts are set up
-3. Run a composer update to get vendor dependencies
-4. Create a virtual host that points to the public directory
+  wget https://github.com/KimPrince/zf2-starter/archive/master.tar.gz
+  tar xpvf master.tar.gz
+  mv zf2-starter-master my-directory
+  rm master.tar.gz
 
-When you browse your virtual host you should see a page welcoming you to the Starter Application.
+2. Run a composer update to get vendor dependencies
+
+  cd my-directory
+  composer self-update
+  composer install
+
+3. Point a virtual host to my-directory/public, and browse the host to see the welcome page
 
 Usage
 -----

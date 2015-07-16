@@ -9,7 +9,7 @@ use Core\Domain\iDomain\Domain;
 /**
  * Collection interface
  */
-interface Collection extends \Iterator, \Countable
+interface Collection
 {
     /**
      * Add member
@@ -25,4 +25,13 @@ interface Collection extends \Iterator, \Countable
      * @return Domain
      */
     public function elementAt($index);
+
+    /**
+     * End
+     *
+     * Move pointer to end and return last value
+     *
+     * @return Domain
+     */
+    public function end();
 }

@@ -4,6 +4,8 @@
  */
 namespace Core\Domain\Collection\Proxy;
 
+use Core\Domain\iDomain;
+use Core\Domain\Collection;
 use Core\Domain\Collection\iCollection;
 use Core\iMapper\Mapper;
 
@@ -12,7 +14,10 @@ use Core\iMapper\Mapper;
  *
  * Stores a mapper, method and arguments, and retrieves a collection on demand.
  */
-abstract class AbstractCollectionProxy implements \IteratorAggregate, \Countable
+abstract class AbstractCollectionProxy implements
+    iCollection\Collection,
+    \IteratorAggregate,
+    \Countable
 {
     /**
      * Inner iterator
@@ -59,7 +64,7 @@ abstract class AbstractCollectionProxy implements \IteratorAggregate, \Countable
 
     /**
      * @see InteratorAggregator::getIterator()
-     * @return \Countable
+     * @return Collection\AbstractCollection
      */
     public function getIterator() 
     {
@@ -79,6 +84,27 @@ abstract class AbstractCollectionProxy implements \IteratorAggregate, \Countable
     public function count()
     {
         return $this->getIterator()->count();
+    }
+
+    /**
+     * Add member
+     *
+     * @param iDomain\Domain $domain
+     */
+    public function add(iDomain\Domain $domain)
+    {
+        $this->getIterator()->add($domain);
+    }
+
+    /**
+     * Get element at
+     *
+     * @param integer $index
+     * @return iDomain\Domain
+     */
+    public function elementAt($index)
+    {
+        return $this->getIterator()->elementAt($index);
     }
 
     /**

@@ -6,6 +6,7 @@ namespace Core\Domain\Collection;
 
 use Core;
 use Core\Exception;
+use Core\Domain\Collection\iCollection;
 use Core\Domain\iDomain;
 use Core\Domain\Factory\AbstractFactory;
 
@@ -14,7 +15,10 @@ use Core\Domain\Factory\AbstractFactory;
  *
  * Members are stored in a raw data array and instantiated if/when accessed.
  */
-abstract class AbstractCollection implements \Iterator, \Countable
+abstract class AbstractCollection implements
+    iCollection\Collection,
+    \Iterator,
+    \Countable
 {
     use Core\HelperTrait;
 
