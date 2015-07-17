@@ -15,10 +15,7 @@ use Core\Domain\Factory\AbstractFactory;
  *
  * Members are stored in a raw data array and instantiated if/when accessed.
  */
-abstract class AbstractCollection implements
-    iCollection\Collection,
-    \Iterator,
-    \Countable
+abstract class AbstractCollection implements \Iterator
 {
     use Core\HelperTrait;
 
@@ -76,19 +73,13 @@ abstract class AbstractCollection implements
      * @param iDomain\Domain $object
      * @throws Exception\Collection
      */
-    public function add(iDomain\Domain $object)
+    protected function doAdd(iDomain\Domain $object)
     {
         if ($this->isReadOnly()) {            
             throw new Exception\Collection(
                 'Read only collection: ' . $this->getShortType($this));
         }
 
-        if($this->getShortType($this) != $object->getShortType($object)) {
-            throw new Exception\Collection(
-                'Cannot add ' . $object->getShortType($object) . ' to a collection of ' .
-                $this->getShortType($this));
-        }
-        
         $this->objects[$this->total] = $object;
         $this->total++;
     }

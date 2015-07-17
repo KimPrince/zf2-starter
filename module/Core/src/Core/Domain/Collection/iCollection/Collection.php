@@ -9,15 +9,12 @@ use Core\Domain\iDomain\Domain;
 /**
  * Collection interface
  */
-interface Collection
+interface Collection extends \Countable
 {
-    /**
-     * Add member
-     *
-     * @param Domain $domain
-     */
-    public function add(Domain $domain);
-            
+    // Interfaces that extend Collection should declare an add() method
+    // For example, the Foo collection should declare the following method:
+    // public function add(\Core\Domain\iDomain\Foo $foo);
+
     /**
      * Get element at
      * 

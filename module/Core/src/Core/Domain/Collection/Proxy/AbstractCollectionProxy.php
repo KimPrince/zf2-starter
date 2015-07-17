@@ -14,10 +14,7 @@ use Core\iMapper\Mapper;
  *
  * Stores a mapper, method and arguments, and retrieves a collection on demand.
  */
-abstract class AbstractCollectionProxy implements
-    iCollection\Collection,
-    \IteratorAggregate,
-    \Countable
+abstract class AbstractCollectionProxy implements \IteratorAggregate
 {
     /**
      * Inner iterator
@@ -87,16 +84,6 @@ abstract class AbstractCollectionProxy implements
     }
 
     /**
-     * Add member
-     *
-     * @param iDomain\Domain $domain
-     */
-    public function add(iDomain\Domain $domain)
-    {
-        $this->getIterator()->add($domain);
-    }
-
-    /**
      * Get element at
      *
      * @param integer $index
@@ -105,6 +92,16 @@ abstract class AbstractCollectionProxy implements
     public function elementAt($index)
     {
         return $this->getIterator()->elementAt($index);
+    }
+
+    /**
+     * End
+     *
+     * @return iDomain\Domain
+     */
+    public function end()
+    {
+        return $this->getIterator()->end();
     }
 
     /**
