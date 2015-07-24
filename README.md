@@ -10,7 +10,7 @@ other frameworks quite easily. You are welcome to use it as the foundation for y
 Installation
 ------------
 
-1. Download and extract the files to a working directory.  On *nix systems, the easiest way to do this is:
+Step 1. Download and extract the files to a working directory.  On *nix systems, the easiest way to do this is:
 
 ````
     wget https://github.com/KimPrince/zf2-starter/archive/master.tar.gz
@@ -19,7 +19,7 @@ Installation
     rm master.tar.gz
 ````
 
-2. Run a composer update to get vendor dependencies
+Step 2. Run a composer update to get vendor dependencies
 
 ````
     cd my-directory
@@ -27,7 +27,7 @@ Installation
     composer install
 ````
 
-3. Point a virtual host to my-directory/public, and browse the host to see the welcome page
+Step 3. Point a virtual host to my-directory/public, and browse the host to see the welcome page
 
 Usage
 -----

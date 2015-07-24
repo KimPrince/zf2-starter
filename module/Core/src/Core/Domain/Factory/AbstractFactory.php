@@ -224,7 +224,7 @@ abstract class AbstractFactory implements ServiceManager\ServiceLocatorAwareInte
     {
         $shortName     = ucfirst($shortName);
         $proxyName     = "\\Core\\Domain\\Proxy\\$shortName";
-        $mapperSvcName = "Mapper\\Mapper\\$shortName";
+        $mapperSvcName = "Mapper\\$shortName";
 
         return new $proxyName($identity, $this->serviceLocator->get($mapperSvcName));
     }
@@ -241,7 +241,7 @@ abstract class AbstractFactory implements ServiceManager\ServiceLocatorAwareInte
     {
         $shortName      = ucfirst($shortName);
         $proxyName      = "\\Core\\Domain\\Collection\\Proxy\\$shortName";
-        $mapperSvcName  = "Mapper\\Mapper\\$shortName";
+        $mapperSvcName  = "Mapper\\$shortName";
 
         return new $proxyName($this->serviceLocator->get($mapperSvcName), $methodName, $params);
     }

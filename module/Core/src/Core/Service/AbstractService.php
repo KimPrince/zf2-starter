@@ -48,7 +48,7 @@ abstract class AbstractService implements
      */
     public function __construct(Event\AbstractListener $listener)
     {
-        $this->serviceListener = $listener;
+        $this->listener = $listener;
     }
 
     /**

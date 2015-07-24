@@ -46,10 +46,20 @@ return array(
         ),
     ),
     'service_manager' => array(
+        'services' => array(
+            'Core\Watcher' => \Core\Domain\DomainWatcher::getInstance()
+        ),
+        'factories' => array(
+            'Core\Log' => function ($sm) {
+                    $logger = new \Zend\Log\Logger;
+                    $logger->addWriter(
+                        'stream', null, array('stream' => 'data/logs/core.log'));
+                    return $logger;
+                }
+        ),
         'abstract_factories' => array(
             'Core\Service\ServiceLoader',
             'Core\Domain\Factory\FactoryLoader',
-            'Zend\Log\LoggerAbstractServiceFactory',
         ),
     ),
     'controllers' => array(
@@ -73,19 +83,7 @@ return array(
             __DIR__ . '/../view',
         ),
     ),
-    'log' => array(
-        'Log\Core' => array(
-            'writers' => array(
-                array(
-                    'name' => 'stream',
-                    'priority' => 1000,
-                    'options' => array(
-                        'stream' => 'data/logs/core.log',
-                    ),
-                ),
-            ),
-        ),
-    ),
+
     // Placeholder for console routes
     'console' => array(
         'router' => array(

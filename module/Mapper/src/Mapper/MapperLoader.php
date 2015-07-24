@@ -2,10 +2,9 @@
 /**
  * @link http://kimprince.com/starter/starter-application-v10 for usage info
  */
-namespace Mapper\Mapper;
+namespace Mapper;
 
 use Core\HelperTrait;
-use Core\Domain\DomainWatcher;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\AbstractFactoryInterface;
 
@@ -27,9 +26,9 @@ class MapperLoader implements AbstractFactoryInterface
      */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        $prefix = substr($requestedName, 0, 13);
+        $prefix = substr($requestedName, 0, 7);
 
-        if ($prefix == 'Mapper\Mapper' && class_exists($requestedName)) {
+        if ($prefix == 'Mapper\\' && class_exists($requestedName)) {
             return true;
         }
 
@@ -45,10 +44,10 @@ class MapperLoader implements AbstractFactoryInterface
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
         $shortName = $this->getShortType($requestedName);
-        $db = $serviceLocator->get('Zend\Db\Adapter\Adapter');
 
-        $watcher = DomainWatcher::getInstance();
-        $factory = $serviceLocator->get("Core\\Domain\\Factory\\$shortName");
+        $factory    = $serviceLocator->get("Core\\Domain\\Factory\\$shortName");
+        $watcher    = $serviceLocator->get('Domain\Watcher');
+        $db         = $serviceLocator->get('Zend\Db\Adapter\Adapter');
 
         return new $requestedName($factory, $watcher, $db);
     }

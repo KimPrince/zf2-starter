@@ -9,7 +9,7 @@ class Module
         return array(
             'service_manager' => array(
                 'abstract_factories' => array(
-                    'Mapper\Mapper\MapperLoader'
+                    'Mapper\MapperLoader'
                 ),
             ),
         );

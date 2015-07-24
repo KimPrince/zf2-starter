@@ -19,7 +19,7 @@ class FactoryLoader implements AbstractFactoryInterface
     {
         $prefix = substr($requestedName, 0, 19);
 
-        if ($prefix == 'Core\Model\Factory' && class_exists($requestedName)) {
+        if ($prefix == 'Core\Domain\Factory' && class_exists($requestedName)) {
             return true;
         }
 
