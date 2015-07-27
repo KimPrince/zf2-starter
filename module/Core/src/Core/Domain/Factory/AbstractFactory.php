@@ -47,38 +47,45 @@ abstract class AbstractFactory implements ServiceManager\ServiceLocatorAwareInte
      * Create object
      *
      * @param array $data
+     * @throws Exception\Factory
      * @return Domain\AbstractDomain
      */
     public function create(array $data = array())
     {
-        $this->doNewEntityDefaults($data);
-        $this->doTypeConversion($data);
-        $this->doAddRelations($data);
+        try {
 
-        $object = $this->doInstantiation($data);
+            if (empty($data['id'])) {
+                $this->doNewObjectDefaults($data);
+            }
 
-        $this->doPostInit($object);
-        $object = $this->doDomainWatcher($object);
+            $this->doTypeConversion($data);
 
-        return $object;
+            if (!empty($data['id'])) {
+                $this->doAddRelations($data);
+            }
+
+            $object = $this->doInstantiation($data);
+            $this->doPostInit($object);
+            $object = $this->doDomainWatcher($object);
+
+            return $object;
+
+        } catch (\Exception $e) {
+            throw new Exception\Factory(
+                'Unable to create new ' . $this->getShortType($this), null, $e);
+        }
     }
 
     /**
-     * New entity add defaults
-     *
-     * Check the data for an ID to determine if it is a new object.  If so, add
-     * default values.
+     * Add new domain object defaults
      *
      * @param array $data
      */
-    protected function doNewEntityDefaults(array &$data)
+    protected function doNewObjectDefaults(array &$data)
     { }
 
     /**
      * Do type conversion
-     *
-     * Typical type conversions converting time/date stamps to unix time, and
-     * converting single-valued dependent objects to their proxies.
      *
      * @param array $data
      */
@@ -86,9 +93,7 @@ abstract class AbstractFactory implements ServiceManager\ServiceLocatorAwareInte
     { }
 
     /**
-     * Do add relations
-     *
-     * Add multi-valued properties (usually proxies) to existing objects.
+     * Add relations to existing objects
      *
      * @param array $data
      */
@@ -98,9 +103,6 @@ abstract class AbstractFactory implements ServiceManager\ServiceLocatorAwareInte
     /**
      * Do instantiation
      *
-     * Typically assemble constructor parameters and instantiate the object.  Aside from the
-     * object data, typical constructor parameters include arrays of factories and finders.
-     *
      * @param array $data
      * @return Domain\AbstractDomain
      */
@@ -108,10 +110,6 @@ abstract class AbstractFactory implements ServiceManager\ServiceLocatorAwareInte
 
     /**
      * Do post init
-     *
-     * For custom actions required prior to returning the object.  This is useful in cases
-     * where pre-entity checks require lots of instantiation.  In these cases, do the checks
-     * in this post init hook where most of the required objects will already be available.
      *
      * @param Domain\AbstractDomain $object
      */
@@ -124,8 +122,6 @@ abstract class AbstractFactory implements ServiceManager\ServiceLocatorAwareInte
      * If an existing entity is already stored in the domain watcher, return this entity in
      * preference to the newly created one.
      *
-     * @todo Review the domain watcher usage
-     *
      * @param Domain\AbstractDomain $object
      * @return Domain\AbstractDomain
      */
@@ -137,45 +133,6 @@ abstract class AbstractFactory implements ServiceManager\ServiceLocatorAwareInte
 
         $this->watcher->add($object);
         return $object;
-    }
-
-    // flavour methods
-
-    /**
-     * Set flavour
-     *
-     * Set flavour for factory, overwriting any existing flavour setting
-     *
-     * @param integer $flavour
-     * @throws Exception\Factory
-     */
-    public function setFlavour($flavour)
-    {
-        if (!filter_var($flavour, FILTER_VALIDATE_INT)) {
-            throw new Exception\Factory('Invalid filter flavour');
-        }
-
-        $this->flavour = $flavour;
-    }
-
-    /**
-     * Add flavour
-     *
-     * Add flavour to existing flavour
-     */
-    public function addFlavour($flavour)
-    {
-        $this->flavour = $this->$flavour | $flavour;
-    }
-
-    /**
-     * Get flavour
-     *
-     * @return integer
-     */
-    public function getFlavour()
-    {
-        return $this->flavour;
     }
 
     // service locator
@@ -244,5 +201,44 @@ abstract class AbstractFactory implements ServiceManager\ServiceLocatorAwareInte
         $mapperSvcName  = "Mapper\\$shortName";
 
         return new $proxyName($this->serviceLocator->get($mapperSvcName), $methodName, $params);
+    }
+
+    // flavour methods for N+1 selects handling
+
+    /**
+     * Set flavour
+     *
+     * Set flavour for factory, overwriting any existing flavour setting
+     *
+     * @param integer $flavour
+     * @throws Exception\Factory
+     */
+    public function setFlavour($flavour)
+    {
+        if (!filter_var($flavour, FILTER_VALIDATE_INT)) {
+            throw new Exception\Factory('Invalid filter flavour');
+        }
+
+        $this->flavour = $flavour;
+    }
+
+    /**
+     * Add flavour
+     *
+     * Add flavour to existing flavour
+     */
+    public function addFlavour($flavour)
+    {
+        $this->flavour = $this->$flavour | $flavour;
+    }
+
+    /**
+     * Get flavour
+     *
+     * @return integer
+     */
+    public function getFlavour()
+    {
+        return $this->flavour;
     }
 }
