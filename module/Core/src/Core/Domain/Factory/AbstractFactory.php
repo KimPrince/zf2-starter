@@ -156,18 +156,19 @@ abstract class AbstractFactory implements ServiceManager\ServiceLocatorAwareInte
     // helpers
 
     /**
-     * Get empty collection
+     * Get collection
      *
      * @param string $shortName
+     * @param array $data
      * @return Domain\Collection\AbstractCollection
      */
-    public function getEmptyCollection($shortName)
+    public function getCollection($shortName, array $data = array())
     {
         $shortName      = ucfirst($shortName);
         $collectionName = "\\Core\\Domain\\Collection\\$shortName";
         $factorySvcName = "Core\\Domain\\Factory\\$shortName";
 
-        return new $collectionName(($this->serviceLocator->get($factorySvcName)), []);
+        return new $collectionName(($this->serviceLocator->get($factorySvcName)), $data);
     }
 
     /**

@@ -46,7 +46,7 @@ class MapperLoader implements AbstractFactoryInterface
         $shortName = $this->getShortType($requestedName);
 
         $factory    = $serviceLocator->get("Core\\Domain\\Factory\\$shortName");
-        $watcher    = $serviceLocator->get('Domain\Watcher');
+        $watcher    = $serviceLocator->get('Core\Watcher');
         $db         = $serviceLocator->get('Zend\Db\Adapter\Adapter');
 
         return new $requestedName($factory, $watcher, $db);
