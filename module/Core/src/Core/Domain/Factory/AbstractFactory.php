@@ -209,10 +209,9 @@ abstract class AbstractFactory implements ServiceManager\ServiceLocatorAwareInte
     /**
      * Set flavour
      *
-     * Set flavour for factory, overwriting any existing flavour setting
-     *
      * @param integer $flavour
      * @throws Exception\Factory
+     * @return AbstractFactory
      */
     public function setFlavour($flavour)
     {
@@ -221,16 +220,24 @@ abstract class AbstractFactory implements ServiceManager\ServiceLocatorAwareInte
         }
 
         $this->flavour = $flavour;
+        return $this;
     }
 
     /**
      * Add flavour
      *
-     * Add flavour to existing flavour
+     * @param integer $flavour
+     * @throws Exception\Factory
+     * @return AbstractFactory
      */
     public function addFlavour($flavour)
     {
-        $this->flavour = $this->$flavour | $flavour;
+        if (!filter_var($flavour, FILTER_VALIDATE_INT)) {
+            throw new Exception\Factory('Invalid filter flavour');
+        }
+
+        $this->flavour = $this->flavour | $flavour;
+        return $this;
     }
 
     /**
