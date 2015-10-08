@@ -33,4 +33,4 @@ Usage
 -----
 
 For a detailed explanation of the Starter Application, please see
-http://www.kimprince.com/starter/starter-application-v10
+http://www.kimprince.com/starter/starter-application
